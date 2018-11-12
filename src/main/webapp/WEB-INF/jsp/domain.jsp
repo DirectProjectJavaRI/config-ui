@@ -6,7 +6,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
         <title><fmt:message key="domain.title" /></title>
 
-        <script type="text/javascript" src="/resources/jquery.leanModal.min.js"></script>
+        <script type="text/javascript" src="resources/jquery.leanModal.min.js"></script>
         
         <!-- I got this from http://www.sohtanaka.com/web-design/simple-tabs-w-css-jquery/ -->
         <style type="text/css">
@@ -141,7 +141,7 @@
                 });
 
                 
-		$('#assignBundles').load('/bundles/assignBundlesForm');
+		$('#assignBundles').load('bundles/assignBundlesForm');
 
                 <c:if test="${not empty domainId}">
 
@@ -193,7 +193,7 @@
         
             $(function() {
                 $('a[name=addMoreBundles]').click(function() {
-                    $('#addMoreBundles').load('/bundles/addMoreBundlesForm?domainName=${domainName}');
+                    $('#addMoreBundles').load('bundles/addMoreBundlesForm?domainName=${domainName}');
                 });
             });
 

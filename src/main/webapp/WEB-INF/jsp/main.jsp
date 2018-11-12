@@ -11,7 +11,7 @@
     <body>
 
         <%@ include file="/WEB-INF/jsp/header.jsp" %>
-        <h2>Manage Domains <a href="/main/search?domainName=&submitType=newdomain" style="font-size:12px;font-weight:normal;">Create New Domain</a></h2>
+        <h2>Manage Domains <a href="main/search?domainName=&submitType=newdomain" style="font-size:12px;font-weight:normal;">Create New Domain</a></h2>
 	
 		
 
@@ -25,7 +25,7 @@
 
             <h3>Filter Domains</h3>
         
-            <spring:url value="/main/search" var="formUrl"/>
+            <spring:url value="main/search" var="formUrl"/>
             <form:form id="searchDomainForm" action="${fn:escapeXml(formUrl)}" cssClass="cleanform" modelAttribute="searchDomainForm" method="GET">
 
                 <div>

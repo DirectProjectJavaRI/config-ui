@@ -70,7 +70,7 @@ function updateDomainBundles() {
         
 
          
-         $.post("/domain/addBundle", { bundles: bundleArrayString}, function() {
+         $.post("domain/addBundle", { bundles: bundleArrayString}, function() {
             window.location.reload();
 
          });       

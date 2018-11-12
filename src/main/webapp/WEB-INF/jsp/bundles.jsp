@@ -7,11 +7,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title><fmt:message key="bundles.title" /></title>
 
-<script type="text/javascript" src="/resources/jquery.leanModal.min.js"></script>
+<script type="text/javascript" src="../resources/jquery.leanModal.min.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
-    $('#newBundle').load('/bundles/newBundleForm');
+    $('#newBundle').load('../bundles/newBundleForm');
 });
 
 $(function() {                

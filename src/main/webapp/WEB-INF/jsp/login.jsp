@@ -22,7 +22,7 @@ background-image: linear-gradient(to top, #184B84 0%, #366FAC 100%);">
     <head>
         <%@ include file="/WEB-INF/jsp/include.jsp"%>
         <META http-equiv="Content-Type" content="text/html;charset=UTF-8">
-        <title><fmt:message key="welcome.title" /></title>
+        <title><spring:message code="welcome.title" /></title>
     </head>
     <body style="background:none;color:white;font-family: 'PT Sans',sans-serif;font-size: 16px;">
 

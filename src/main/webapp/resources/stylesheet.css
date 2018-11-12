@@ -44,16 +44,16 @@ border: 2px solid #bbb;
 .alert { text-shadow: 0 1px 1px #fff; }
 .alert.info{
     border-color:#446d99;
-    background:url('/resources/images/bg-information.png') repeat-x #a5c8f4;
+    background:url('images/bg-information.png') repeat-x #a5c8f4;
 }
 
 .alert.info span.icon {
-    background: url('/resources/images/information.png');
+    background: url('images/information.png');
     background-attachment: scroll;
 background-clip: border-box;
 background-color: 
 rgba(0, 0, 0, 0);
-background-image: url(/resources/images/information.png);
+background-image: url(images/information.png);
 background-origin: padding-box;
 background-repeat: repeat;
 color: 
@@ -98,7 +98,7 @@ ul#nav_sub_links li:first-child {
 ul#nav_sub_links li {
     display: inline-block;
     padding: 0px 30px;
-    background: url("/resources/images/seperator.png") no-repeat scroll right center transparent;
+    background: url("images/seperator.png") no-repeat scroll right center transparent;
     float: left;
 }
 

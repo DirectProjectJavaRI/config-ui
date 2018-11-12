@@ -46,16 +46,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
         .and()
         .formLogin()
         .loginPage("/login")
-        //.loginProcessingUrl("/j_spring_security_check")
         .defaultSuccessUrl("/main", true)
         .failureUrl("/login?login_error=1")
         .permitAll()
-        //.failureHandler(authenticationFailureHandler())
         .and()
         .logout()
-        .logoutUrl("/login?logout=1")
-        .deleteCookies("JSESSIONID");
-        //.logoutSuccessHandler(logoutSuccessHandler());
+        .logoutUrl("/logout")
+        .deleteCookies("JSESSIONID")
+        .logoutSuccessHandler((req,res,auth)->{   // Logout handler called after successful logout 
+            req.getSession().setAttribute("message", "You are logged out successfully.");
+            res.sendRedirect("login"); // Redirect user to login page with message.
+         });
     }
     
     @Bean

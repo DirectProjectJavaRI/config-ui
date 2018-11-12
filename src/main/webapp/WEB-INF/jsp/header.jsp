@@ -20,7 +20,7 @@
     </ul>
 
     <div style="float:right;line-height: 38px;padding-right:10px;">
-    You are logged in. <a href="<c:url value="/j_spring_security_logout"/>">Log out</a>
+    You are logged in. <a href="<c:url value="/logout"/>">Log out</a>
 </div>
     </sec:authorize>
 </div>
