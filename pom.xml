@@ -179,6 +179,12 @@
 	    <dependency>
 	       <groupId>${project.groupId}</groupId>
 	       <artifactId>direct-jce-providers</artifactId>
+		   <exclusions>
+		        <exclusion>
+		            <groupId>bouncycastle</groupId>
+		            <artifactId>bcprov-jdk15</artifactId>
+		        </exclusion>
+		   </exclusions>		       
 	       <version>1.0</version>	
 	    </dependency>   		 	
 	    <dependency>
