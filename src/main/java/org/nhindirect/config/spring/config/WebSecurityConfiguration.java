@@ -15,6 +15,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
 {
+	private static final String BCRYPT_PREFIX = "{bcrypt}";
+	
 	@Value("${direct.configui.security.user.name}")
 	protected String username;
 	
@@ -22,11 +24,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter
 	protected String password;
 	
     @Override
-    protected void configure(final AuthenticationManagerBuilder auth) throws Exception 
+    public void configure(AuthenticationManagerBuilder auth) throws Exception
     {
-        auth.inMemoryAuthentication()
-          .withUser(username).password(passwordEncoder().encode(password)).roles("ADMIN");
-    }	
+    	if (password.startsWith(BCRYPT_PREFIX))
+    		password = password.substring(BCRYPT_PREFIX.length());  		
+    	else
+    		password = passwordEncoder().encode(password);
+
+        auth
+           .inMemoryAuthentication()
+           .passwordEncoder(passwordEncoder())
+           .withUser(username)
+           .password(password)
+           .roles("ADMIN");
+    }
 	
     @Override
     public void configure(WebSecurity web) throws Exception 
