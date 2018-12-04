@@ -1,0 +1,12 @@
+---
+applications:
+- name: direct-config-ui
+  instances: 1
+  buildpack: java_buildpack
+  path: target/config-ui-6.0-SNAPSHOT.war
+  env: 
+    spring.cloud.config.label: master    
+  services:
+    - directhisp-config-server
+    - directhisp-eureka 
+    
