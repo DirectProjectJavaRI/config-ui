@@ -78,7 +78,7 @@
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-starter-parent</artifactId>
-				 <version>Greenwich.M3</version>
+				 <version>Greenwich.RC1</version>
 				<type>pom</type>
 				<scope>import</scope>		
 			</dependency>											
@@ -142,7 +142,6 @@
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>dnsjava</groupId>
