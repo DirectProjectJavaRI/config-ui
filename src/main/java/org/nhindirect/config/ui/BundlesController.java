@@ -26,8 +26,6 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.nhind.config.rest.TrustBundleService;
 import org.nhindirect.common.rest.exceptions.ServiceException;
 import org.nhindirect.config.model.TrustBundle;
@@ -49,14 +47,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import lombok.extern.slf4j.Slf4j;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 
 
 @Controller
 @RequestMapping("/bundles")
+@Slf4j
 public class BundlesController {
-    private final Log log = LogFactory.getLog(getClass());
 
 	private TrustBundleService bundleService;
 	
@@ -216,8 +217,8 @@ public class BundlesController {
                     }
 
                 } catch (Exception e) {
-                        if (log.isDebugEnabled()) log.error(e);
-                        e.printStackTrace();
+                        if (log.isDebugEnabled()) 
+                        	log.error("Error adding trust bundle.", e);
                 }
 
                 
@@ -270,7 +271,7 @@ public class BundlesController {
         {
             if (log.isDebugEnabled()) 
             {
-                log.debug("Bundles marked for removal: "+simpleForm.getBundlesSelected().toString());
+                log.debug("Bundles marked for removal: {}", simpleForm.getBundlesSelected().toString());
             }
         }
 
@@ -352,7 +353,7 @@ public class BundlesController {
         {
             if (log.isDebugEnabled()) 
             {
-                log.debug("Bundles marked for refresh: "+simpleForm.getBundlesSelected().toString());
+                log.debug("Bundles marked for refresh: {}", simpleForm.getBundlesSelected().toString());
             }
         }
 
@@ -371,14 +372,14 @@ public class BundlesController {
             for(int i=0; i<bundleCount; i++) 
             {
                 final String bundleName = simpleForm.getBundlesSelected().get(i);
-                log.debug("Refreshing Bundle #"+bundleName);
+                log.debug("Refreshing Bundle #{}", bundleName);
                                 
                 // Refresh Trust Bundle(s)
                 try 
                 {
                     bundleService.refreshTrustBundle(bundleName);
                 } catch (ServiceException cse) {
-                    log.error("Could not refresh bundle: #"+bundleName);
+                    log.error("Could not refresh bundle: #{}", bundleName);
                 }
                 
             }

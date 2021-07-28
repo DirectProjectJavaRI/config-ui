@@ -1,0 +1,33 @@
+spring:
+  application:
+    name: direct-config-ui
+
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
+
+  main:
+    allow-bean-definition-overriding: true
+
+#unique jmx names to avoid collisions when running
+#multiple spring boot apps in an web container
+endpoints:
+  jmx:
+    default-domain: direct-config-ui
+    uniqueNames: true
+
+spring.jmx.default-domain: direct-config-ui
+
+direct:
+  config:
+    service:
+      url: http://localhost:8080/config-service
+
+# Override these properties for your own security credentials.
+  configui:
+    security:
+      user:
+        name: admin
+        password: '{bcrypt}$2a$04$/ICdCjClVtkhXabFY0Uqlu7uuVc56ACbd3ShX9OVEFpKgSFhxiWJC'
+

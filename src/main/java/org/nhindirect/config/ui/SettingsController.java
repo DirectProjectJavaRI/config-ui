@@ -25,8 +25,6 @@ import java.util.Collection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.nhind.config.rest.SettingService;
 import org.nhindirect.common.rest.exceptions.ServiceException;
 import org.nhindirect.config.model.EntityStatus;
@@ -49,10 +47,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/settings")
+@Slf4j
 public class SettingsController {
-	private final Log log = LogFactory.getLog(getClass());
 	
 	private SettingService settingsService;
 	
@@ -142,7 +142,7 @@ public class SettingsController {
 	
 		if (log.isDebugEnabled()) log.debug("Enter domain/removesettings");
 		if(simpleForm.getRemove() != null){
-			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: "+simpleForm.getRemove().toString());
+			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: {}", simpleForm.getRemove().toString());
 		}
 		
 		String strid = ""+simpleForm.getId();
@@ -158,7 +158,7 @@ public class SettingsController {
 	    		if (log.isDebugEnabled()) log.debug(" SUCCESS Trying to remove settings");
 			} catch (ServiceException e) {
 				if (log.isDebugEnabled())
-					log.error(e);
+					log.error("Error removing settings.", e);
 			}
 		}
 		try {

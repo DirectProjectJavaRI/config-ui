@@ -26,6 +26,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.X509Certificate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,8 +40,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.nhind.config.rest.CertPolicyService;
 import org.nhind.config.rest.CertificateService;
 import org.nhind.config.rest.DNSService;
@@ -100,13 +99,12 @@ import org.xbill.DNS.SOARecord;
 import org.xbill.DNS.SRVRecord;
 import org.xbill.DNS.TextParseException;
 
-
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/main")
+@Slf4j
 public class MainController {
-	
-    private final Log log = LogFactory.getLog(getClass());
 
 	private TrustBundleService bundleService;
 	private CertificateService certService;
@@ -174,10 +172,12 @@ public class MainController {
                                         @RequestParam(value="domainName", required=false) String searchDomainName,
                                         @RequestParam(value="status", required=false) EntityStatus searchStatus)  
         {
-            log.error("Hit Search Controller");
+
             
-            if (log.isDebugEnabled()) {
-                log.debug("Enter search");
+            if (log.isDebugEnabled()) 
+            {
+                log.debug("Hit Search Controller");
+            	log.debug("Enter search");
             }                
 
             String message = "Search complete";
@@ -236,9 +236,9 @@ public class MainController {
                  * 
                  *************************************/                     
 
-                //if (log.isDebugEnabled()) {
-                    log.error("trying to go to the certificates page");
-                //}
+                  if (log.isDebugEnabled()) {
+                    log.debug("trying to go to the certificates page");
+                  }
                     final String action = "Update";
                     model.addAttribute("action", action);
 
@@ -428,11 +428,8 @@ public class MainController {
                     policies = policyService.getPolicies();
                     
                 } catch (Exception e) {
-                    System.out.println("Failed to lookup policies: " + e.getMessage());
+                    log.error("Failed to lookup policies: {}", e.getMessage());
                 }
-                
-                //log.error(policies);
-                
                 
                 if(policies != null) {
                     model.addAttribute("policies", policies);
@@ -701,7 +698,6 @@ public class MainController {
 	                    
 	                    if(enabledDomains != null && !enabledDomains.isEmpty()) 
 	                    {
-	                        log.error(enabledDomains);
 	                        if(domains.isEmpty())
 	                        {
 	                            domains = enabledDomains;
@@ -880,7 +876,11 @@ public class MainController {
 				DNSRecord t = (DNSRecord) iter.next();
 	
 				SrvRecord srv = new SrvRecord();
-				srv.setCreateTime(t.getCreateTime());
+				
+				final LocalDateTime localDateTime = 
+						LocalDateTime.ofInstant(t.getCreateTime().toInstant(), t.getCreateTime().getTimeZone().toZoneId());
+				
+				srv.setCreateTime(localDateTime);
 				srv.setData(t.getData());
 				srv.setDclass(t.getDclass());
 				srv.setId(t.getId());
@@ -931,7 +931,10 @@ public class MainController {
 							.fromString(t.getName()), t.getType(), t.getDclass(), t
 							.getTtl(), t.getData());
 	
-					srv.setCreateTime(t.getCreateTime());
+					final LocalDateTime localDateTime = 
+							LocalDateTime.ofInstant(t.getCreateTime().toInstant(), t.getCreateTime().getTimeZone().toZoneId());
+					
+					srv.setCreateTime(localDateTime);
 					srv.setData(t.getData());
 					srv.setDclass(t.getDclass());
 					srv.setId(t.getId());
