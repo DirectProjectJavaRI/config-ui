@@ -4,7 +4,7 @@
 	<groupId>org.nhind</groupId>
 	<artifactId>config-ui</artifactId>
 	<packaging>war</packaging>
-	<version>8.0.0-SNAPSHOT</version>
+	<version>8.0.0</version>
 	<name>NHIN Direct Java Configuration UI</name>
 	<description>NHIN Direct Java Configuration UI</description>
 	<url>http://api.nhindirect.org/x/www/api.nhindirect.org/java/site/config/config-ui/${project.version}</url>
@@ -149,7 +149,7 @@
 	    <dependency>
 	       <groupId>${project.groupId}</groupId>
 	       <artifactId>direct-common</artifactId>
-	       <version>8.0.0-SNAPSHOT</version>	
+	       <version>8.0.0</version>	
 	    </dependency>   
 	    <dependency>
 	       <groupId>${project.groupId}</groupId>
@@ -165,12 +165,12 @@
 	    <dependency>
 	       <groupId>${project.groupId}</groupId>
 	       <artifactId>config-service-client</artifactId>
-	       <version>8.0.0-SNAPSHOT</version>	  
+	       <version>8.0.0</version>	  
 	    </dependency>
 	    <dependency>
 	       <groupId>${project.groupId}</groupId>
 	       <artifactId>config-store</artifactId>
-	       <version>8.0.0-SNAPSHOT</version>	  
+	       <version>8.0.0</version>	  
 	    </dependency>
 
 		<!-- Validation support -->
