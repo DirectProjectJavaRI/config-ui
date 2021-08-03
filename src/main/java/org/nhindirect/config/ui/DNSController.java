@@ -29,6 +29,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -41,8 +42,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.nhind.config.rest.CertificateService;
 import org.nhind.config.rest.DNSService;
 import org.nhind.config.rest.SettingService;
@@ -87,17 +86,18 @@ import org.xbill.DNS.SOARecord;
 import org.xbill.DNS.SRVRecord;
 import org.xbill.DNS.TextParseException;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Controller (MVC) for "Manage DNS Entries" pages.
  */
 @Controller
 @RequestMapping("/dns")
+@Slf4j
 public class DNSController
 {
 	private static final String DEFAULT_JCE_PROVIDER_STRING = "BC";
 	private static final String JCE_PROVIDER_STRING_SYS_PARAM = "org.nhindirect.config.JCEProviderName";	
-	
-    private final Log log = LogFactory.getLog(getClass());
     
 	private CertificateService certService;
 	private DNSService dnsService;
@@ -170,7 +170,7 @@ public class DNSController
                                 @RequestParam(value="submitType") String actionPath
                                 ) 
     {
-        if (log.isDebugEnabled()) log.debug("Enter: " + actionPath);
+        if (log.isDebugEnabled()) log.debug("Enter: {}", actionPath);
         
         final ModelAndView mav = new ModelAndView();
         
@@ -654,8 +654,7 @@ public class DNSController
 			} 
 			catch (Exception e) {
 				if (log.isDebugEnabled())
-					log.error(e.getMessage());
-				e.printStackTrace();
+					log.error(e.getMessage(), e);
 			}
 
             CertdnsForm.setType("CERT");
@@ -937,8 +936,8 @@ public class DNSController
 
 		if (AdnsForm.getRemove() != null) {
 			if (log.isDebugEnabled())
-				log.debug("the list of checkboxes checked or not is: "
-						+ AdnsForm.getRemove().toString());
+				log.debug("the list of checkboxes checked or not is: {}",
+						AdnsForm.getRemove().toString());
 		}
 
 		/*
@@ -1091,7 +1090,11 @@ public class DNSController
 				final DNSRecord t = (DNSRecord) iter.next();
 	
 				final SrvRecord srv = new SrvRecord();
-				srv.setCreateTime(t.getCreateTime());
+				
+				final LocalDateTime localDateTime = 
+						LocalDateTime.ofInstant(t.getCreateTime().toInstant(), t.getCreateTime().getTimeZone().toZoneId());
+				
+				srv.setCreateTime(localDateTime);
 				srv.setData(t.getData());
 				srv.setDclass(t.getDclass());
 				srv.setId(t.getId());
@@ -1141,7 +1144,10 @@ public class DNSController
 							.fromString(t.getName()), t.getType(), t.getDclass(), t
 							.getTtl(), t.getData());
 	
-					srv.setCreateTime(t.getCreateTime());
+					final LocalDateTime localDateTime = 
+							LocalDateTime.ofInstant(t.getCreateTime().toInstant(), t.getCreateTime().getTimeZone().toZoneId());
+					
+					srv.setCreateTime(localDateTime);
 					srv.setData(t.getData());
 					srv.setDclass(t.getDclass());
 					srv.setId(t.getId());

@@ -41,8 +41,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.nhind.config.rest.AddressService;
 import org.nhind.config.rest.AnchorService;
 import org.nhind.config.rest.CertificateService;
@@ -78,12 +76,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 @Controller
 @RequestMapping("/domain")
+@Slf4j
 public class DomainController {
-	
-    private final Log log = LogFactory.getLog(getClass());
     
 	private CertificateService certService;
 	private DomainService domainService;
@@ -305,7 +304,8 @@ public class DomainController {
 					// store the bytes somewhere
 					final Anchor ank = new Anchor();
 					ank.setCertificateData(bytes);
-					if (log.isDebugEnabled()) log.debug("incoming is: "+anchorForm.isIncoming()+" and outgoing is: "+anchorForm.isOutgoing());
+					if (log.isDebugEnabled()) log.debug("incoming is: {} and outgoing is: {}", 
+							anchorForm.isIncoming(), anchorForm.isOutgoing());
 					ank.setIncoming(anchorForm.isIncoming());
 					ank.setOutgoing(anchorForm.isOutgoing());
 					ank.setOwner(owner);
@@ -319,10 +319,9 @@ public class DomainController {
 
 			} catch (ServiceException ed) {
 				if (log.isDebugEnabled())
-					log.error(ed);
+					log.error("Error storing anchor.", ed);
 			} catch (Exception e) {
-				if (log.isDebugEnabled()) log.error(e.getMessage());
-				e.printStackTrace();
+				if (log.isDebugEnabled()) log.error(e.getMessage(), e);
 			}
 			// certificate and anchor forms and results
 			try {
@@ -405,7 +404,7 @@ public class DomainController {
 	
 		if (log.isDebugEnabled()) log.debug("Enter domain/removeanchor");
 		if(simpleForm.getRemove() != null){
-			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: "+simpleForm.getRemove().toString());
+			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: {}", simpleForm.getRemove().toString());
 		}
 	
 		final String domAttr = (String)session.getAttribute("currentDomainName");
@@ -427,7 +426,7 @@ public class DomainController {
 		}
 		if (anchorService != null && simpleForm != null && actionPath != null && (actionPath.equalsIgnoreCase("deleteanchors") || actionPath.equalsIgnoreCase("Remove Selected Anchors")) && simpleForm.getRemove() != null) {
 			int cnt = simpleForm.getRemove().size();
-			if (log.isDebugEnabled()) log.debug("removing anchors for domain with name: " + domname);
+			if (log.isDebugEnabled()) log.debug("removing anchors for domain with name: {}",  domname);
 			try{
 				// get list of certificates for this domain
 				final Collection<Anchor> certs = anchorService.getAnchorsForOwner(owner, false, false, "");
@@ -441,7 +440,7 @@ public class DomainController {
 				    	if(t.getId() == Long.parseLong(removeid)){
 					    	if (log.isDebugEnabled()){
 					    		log.debug(" ");
-					    		log.debug("domain address id: " + t.getId());
+					    		log.debug("domain address id: {}", t.getId());
 					    		log.debug(" ");
 					    	}
 					    	// create a collection of matching anchor ids
@@ -459,7 +458,7 @@ public class DomainController {
 				model.addAttribute("addressForm",addrform);
 			} catch (ServiceException e) {
 				if (log.isDebugEnabled())
-					log.error(e);
+					log.error("Error updating domain.", e);
 			}
 		}
 		model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(requestedWith));
@@ -515,7 +514,7 @@ public class DomainController {
 		
 		model.addAttribute("simpleForm",simpleForm);
 		strid = ""+simpleForm.getId();
-		if (log.isDebugEnabled()) log.debug(" the value of id of simpleform is: "+strid);
+		if (log.isDebugEnabled()) log.debug(" the value of id of simpleform is: {}", strid);
 		
 		return new ModelAndView("redirect:/domain?id="+dom.getDomainName()+"#tab2");
 	}			
@@ -568,10 +567,9 @@ public class DomainController {
 
 			} catch (ServiceException ed) {
 				if (log.isDebugEnabled())
-					log.error(ed);
+					log.error("Error saving certificate.", ed);
 			} catch (Exception e) {
-				if (log.isDebugEnabled()) log.error(e);
-				e.printStackTrace();
+				if (log.isDebugEnabled()) log.error("Error saving certificate.", e);
 			}
 			// certificate and anchor forms and results
 			try {
@@ -641,7 +639,7 @@ public class DomainController {
 	
 		if (log.isDebugEnabled()) log.debug("Enter domain/removecertificates");
 		if(simpleForm.getRemove() != null){
-			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: "+simpleForm.getRemove().toString());
+			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: {}", simpleForm.getRemove().toString());
 		}
 		
 		String strid = ""+simpleForm.getId();
@@ -659,7 +657,7 @@ public class DomainController {
 
 		if (certService != null && simpleForm != null && actionPath != null && (actionPath.equalsIgnoreCase("deletecertificate") || actionPath.equalsIgnoreCase("remove selected")) && simpleForm.getRemove() != null) {
 			int cnt = simpleForm.getRemove().size();
-			if (log.isDebugEnabled()) log.debug("removing certificates for domain with name: " + domname);
+			if (log.isDebugEnabled()) log.debug("removing certificates for domain with name: {}",  domname);
 			try{
 				// get list of certificates for this domain
 				final Collection<Certificate> certs = certService.getCertificatesByOwner(owner);
@@ -673,7 +671,7 @@ public class DomainController {
 				    	if(t.getId() == Long.parseLong(removeid)){
 					    	if (log.isDebugEnabled()){
 					    		log.debug(" ");
-					    		log.debug("domain address id: " + t.getId());
+					    		log.debug("domain address id: {}",  t.getId());
 					    		log.debug(" ");
 					    	}
 					    	// create a collection of matching anchor ids
@@ -691,7 +689,7 @@ public class DomainController {
 				model.addAttribute("addressForm",addrform);
 			} catch (ServiceException e) {
 				if (log.isDebugEnabled())
-					log.error(e);
+					log.error("Error removing certificat.",e);
 			}
 		}
 		model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(requestedWith));
@@ -747,7 +745,7 @@ public class DomainController {
 
 		model.addAttribute("simpleForm",simpleForm);
 	    strid = ""+simpleForm.getId();
-		if (log.isDebugEnabled()) log.debug(" the value of id of simpleform is: "+strid);
+		if (log.isDebugEnabled()) log.debug(" the value of id of simpleform is: {}", strid);
 		
 		return mav;
 	}			
@@ -785,7 +783,7 @@ public class DomainController {
 			final EntityStatus estatus = addressForm.getaStatus();
 			final String etype = addressForm.getType();
 			
-			if (log.isDebugEnabled()) log.debug(" Trying to add address: "+anEmail);
+			if (log.isDebugEnabled()) log.debug(" Trying to add address: {}", anEmail);
 			final Address e = new Address();
 			e.setEmailAddress(anEmail);
 			e.setDisplayName(displayname);
@@ -806,7 +804,7 @@ public class DomainController {
 				if (log.isDebugEnabled()) log.debug(" After attempt to insert new email address ");
 			} catch (ServiceException ed) {
 				if (log.isDebugEnabled())
-					log.error(ed);
+					log.error("Error adding address.", ed);
 			}
 			// certificate and anchor forms and results
 			try {
@@ -884,7 +882,7 @@ public class DomainController {
 	
 		if (log.isDebugEnabled()) log.debug("Enter domain/removeaddresses");
 		if(simpleForm.getRemove() != null){
-			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: "+simpleForm.getRemove().toString());
+			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: {}", simpleForm.getRemove().toString());
 		}
 		
 
@@ -909,8 +907,7 @@ public class DomainController {
 					&& simpleForm.getRemove() != null) {
 				int cnt = simpleForm.getRemove().size();
 				if (log.isDebugEnabled())
-					log.debug("removing addresses for domain with name: "
-							+ domname);
+					log.debug("removing addresses for domain with name: {}", domname);
 				try {
 					
 					for (int x = 0; x < cnt; x++) 
@@ -989,7 +986,7 @@ public class DomainController {
 
 				} catch (ServiceException e) {
 					if (log.isDebugEnabled())
-						log.error(e);
+						log.error("Error removing address.", e);
 				}
 			} else if (domainService != null
 					&& (actionPath.equalsIgnoreCase("newaddress") || actionPath
@@ -997,7 +994,7 @@ public class DomainController {
 				// insert the new address into the Domain list of Addresses
 				final String anEmail = simpleForm.getPostmasterEmail();
 				if (log.isDebugEnabled())
-					log.debug(" Trying to add address: " + anEmail);
+					log.debug(" Trying to add address: {}", anEmail);
 				final Address e = new Address();
 				e.setEmailAddress(anEmail);
 				dom.getAddresses().add(e);
@@ -1009,7 +1006,7 @@ public class DomainController {
 								.debug(" After attempt to insert new email address ");
 				} catch (ServiceException ed) {
 					if (log.isDebugEnabled())
-						log.error(ed);
+						log.error("Error adding address", ed);
 				}
 			}
 		}
@@ -1055,7 +1052,7 @@ public class DomainController {
 			
 		model.addAttribute("simpleForm",simpleForm);
 		strid = ""+ dom.getDomainName();//simpleForm.getId();
-		if (log.isDebugEnabled()) log.debug(" the value of id of simpleform is: "+strid);
+		if (log.isDebugEnabled()) log.debug(" the value of id of simpleform is: {}", strid);
 		 
 		return new ModelAndView("redirect:/domain?id="+dom.getDomainName()+"#tab1");
 		//return mav;
@@ -1079,7 +1076,7 @@ public class DomainController {
 		final ModelAndView mav = new ModelAndView(); 
 	
 		if (log.isDebugEnabled()) log.debug("Enter domain/remove");
-		if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: "+simpleForm.getRemove().toString());
+		if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: {}", simpleForm.getRemove().toString());
 		
 		if (domainService != null) 
                 {
@@ -1104,7 +1101,7 @@ public class DomainController {
                             
                                 //String domname = dom.getDomainName();
 
-                                if (log.isDebugEnabled()) log.debug("removing domain with name: " + strid);
+                                if (log.isDebugEnabled()) log.debug("removing domain with name: {}", strid);
 
                                 domainService.deleteDomain(dom.getDomainName());
 
@@ -1133,14 +1130,14 @@ public class DomainController {
                                         }
                                 } catch (ServiceException e) {
                                         if (log.isDebugEnabled())
-                                                log.error(e);
+                                                log.error("Error removing domain.", e);
                                 }
                             
                             }
                             
                         } catch (ServiceException e) {
                                 if (log.isDebugEnabled())
-                                        log.error(e);
+                                        log.error("Error removing domain.", e);
                         }
                         
                     }
@@ -1307,7 +1304,7 @@ public class DomainController {
             if ((domainName != null) && (domainName.length() > 0)) 
             {
                 if (log.isDebugEnabled()) {
-                    log.debug("Need to search for Domain ID: " + domainName);
+                    log.debug("Need to search for Domain ID: {}", domainName);
                 }		
 
                 Domain results = null;
@@ -1337,7 +1334,7 @@ public class DomainController {
                         if (results != null) {
                             
                                 if (log.isDebugEnabled()) {
-                                    log.debug("Found a valid domain" + results.toString());
+                                    log.debug("Found a valid domain {}", results.toString());
                                 }		
                                 
                                 Collection<TrustBundleDomainReltn> bundles = null;
@@ -1423,7 +1420,7 @@ public class DomainController {
                                 mav.addObject("action", action);
                         }
                         else {
-                                log.warn("Service returned a null Domain for a known key: " + domainName);		
+                                log.warn("Service returned a null Domain for a known key: {}", domainName);		
                         }
                 }
                 else { 
@@ -1456,7 +1453,7 @@ public class DomainController {
         { 		
 		if (log.isDebugEnabled()) log.debug("Enter");
 		if (log.isDebugEnabled()) log.debug("Entered saveDomain");
-		if (log.isDebugEnabled()) log.debug("The value of actionPath: "+actionPath);
+		if (log.isDebugEnabled()) log.debug("The value of actionPath: {}", actionPath );
 		
                 ModelAndView mav = new ModelAndView(); 
 		
@@ -1495,7 +1492,7 @@ public class DomainController {
 
                                 int bundleCount = bundles.length;
 
-                                log.debug("# of bundles associated: "+bundleCount);
+                                log.debug("# of bundles associated: {}", bundleCount);
 
                                 // Associate trust bundles to Domain
                                 for(int i=0; i<bundleCount; i++) {                                
@@ -1514,7 +1511,7 @@ public class DomainController {
                                     	bundleService.associateTrustBundleToDomain(bundleString[0], result.get(0).getDomainName(), false, false);
                                     }
                                     
-                                    log.error("Added Bundle ID #"+bundles[i]);
+                                    log.error("Added Bundle ID #{}", bundles[i]);
                                 }   
                             }
                             
@@ -1596,15 +1593,15 @@ public class DomainController {
 
                         model.addAttribute("action", "update");
                         if (log.isDebugEnabled()) {
-                            log.debug("Stored domain: " + form.getDomainFromForm().toString());
+                            log.debug("Stored domain: {}", form.getDomainFromForm().toString());
                         }
                                 
 
                     } catch (ServiceException e) {
-                            log.error(e);
+                            log.error("Error addin domain.", e);
                             msgs.put("domainService", "domainService.add.error");
                     }catch(Exception ed){
-                            log.error(ed);
+                            log.error("Error addin domain.", ed);
                     }
 		}
 		if (log.isDebugEnabled()) log.debug("Exit");

@@ -42,8 +42,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.nhind.config.rest.CertificateService;
 import org.nhindirect.common.crypto.KeyStoreProtectionManager;
 import org.nhindirect.common.crypto.MutableKeyStoreProtectionManager;
@@ -72,10 +71,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
 @RequestMapping("/certificates")
+@Slf4j
 public class CertificatesController {
-	private final Log log = LogFactory.getLog(getClass());
 
 	private CertificateService certService;
 	
@@ -248,10 +249,9 @@ public class CertificatesController {
 
 
 			} catch (ServiceException ed) {
-					log.error(ed);
+					log.error("Error saving certificate.", ed);
 			} catch (Exception e) {
-				log.error(e);
-				e.printStackTrace();
+				log.error("Error saving certificate.", e);
 			}
 			// certificate form and result
 			try {
@@ -421,7 +421,7 @@ public class CertificatesController {
 	
 		if (log.isDebugEnabled()) log.debug("Enter domain/removecertificates");
 		if(simpleForm.getRemove() != null){
-			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: "+simpleForm.getRemove().toString());
+			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: {}", simpleForm.getRemove().toString());
 		}
 		
 		if (certService != null && simpleForm != null && actionPath != null && (actionPath.equalsIgnoreCase("deletecertificate") || actionPath.equalsIgnoreCase("Remove Selected")) && simpleForm.getRemove() != null) {
@@ -440,7 +440,7 @@ public class CertificatesController {
 				    	if(t.getId() == Long.parseLong(removeid)){
 					    	if (log.isDebugEnabled()){
 					    		log.debug(" ");
-					    		log.debug("domain address id: " + t.getId());
+					    		log.debug("domain address id: {}",  t.getId());
 					    		log.debug(" ");
 					    	}
 					    	// create a collection of matching anchor ids
@@ -455,7 +455,7 @@ public class CertificatesController {
 	    		if (log.isDebugEnabled()) log.debug(" SUCCESS Trying to update certificates");
 			} catch (ServiceException e) {
 				if (log.isDebugEnabled())
-					log.error(e);
+					log.error("Error updating certificate.", e);
 			}
 		}
 		model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(requestedWith));
@@ -516,7 +516,7 @@ public class CertificatesController {
 
 		model.addAttribute("simpleForm",simpleForm);
 		final String strid = ""+simpleForm.getId();
-		if (log.isDebugEnabled()) log.debug(" the value of id of simpleform is: "+strid);
+		if (log.isDebugEnabled()) log.debug(" the value of id of simpleform is: {}", strid);
 		
 		return mav;
 	}		

@@ -20,7 +20,6 @@ STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
 THE POSSIBILITY OF SUCH DAMAGE.
 */
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -29,8 +28,6 @@ import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.nhind.config.rest.CertPolicyService;
 import org.nhindirect.common.rest.exceptions.ServiceException;
 import org.nhindirect.config.model.CertPolicy;
@@ -46,41 +43,27 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.nhindirect.config.store.TrustBundle;
-import java.security.cert.CertificateException;
-import org.nhindirect.config.store.TrustBundleDomainReltn;
+
+import lombok.extern.slf4j.Slf4j;
+
 import java.net.MalformedURLException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.security.cert.X509Certificate;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.nhindirect.config.store.TrustBundleAnchor;
 import org.nhindirect.config.ui.form.PolicyForm;
 import org.nhindirect.policy.PolicyLexicon;
-import java.util.Random;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.nhindirect.policy.PolicyLexiconParser;
 import org.nhindirect.policy.PolicyLexiconParserFactory;
 import org.nhindirect.policy.PolicyParseException;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 @Controller
 @RequestMapping("/policies")
+@Slf4j
 public class PoliciesController {
-    private final Log log = LogFactory.getLog(getClass());
 
 	private CertPolicyService policyService;
 
@@ -169,8 +152,6 @@ public class PoliciesController {
             // Get lexicon file from form
             //CommonsMultipartFile lexiconFile = policyForm.getFileData();            
             newPolicy.setPolicyData(policyContent.getBytes());
-
-            log.error(newPolicy); // Debug
            
             try {
                 policyService.addPolicy(newPolicy);
@@ -208,7 +189,7 @@ public class PoliciesController {
         {
             if (log.isDebugEnabled()) 
             {
-                log.debug("Policies marked for removal: "+policyForm.getPoliciesSelected().toString());
+                log.debug("Policies marked for removal: {}", policyForm.getPoliciesSelected().toString());
             }
         }
 
@@ -265,7 +246,7 @@ public class PoliciesController {
 
         if (log.isDebugEnabled()) 
         {
-            log.debug("Enter policies update form for policy #"+policyName);
+            log.debug("Enter policies update form for policy #{}", policyName);
         }
         
         try {
@@ -368,7 +349,7 @@ public class PoliciesController {
         
         if (log.isDebugEnabled()) 
         {
-            log.debug("Enter update policy #"+id);
+            log.debug("Enter update policy #{}", id);
         }    
         
         log.error(policyName);

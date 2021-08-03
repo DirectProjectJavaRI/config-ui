@@ -24,22 +24,20 @@ import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.stereotype.Controller;
 import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
+
+import lombok.extern.slf4j.Slf4j;
 
 //@Controller
 //@RequestMapping("/login")
 //@SessionAttributes("loginForm")
+@Slf4j
 public class LoginController {
 
-    private static final Log log = LogFactory.getLog(LoginController.class);
 
     public LoginController() {
         if (log.isDebugEnabled()) {
