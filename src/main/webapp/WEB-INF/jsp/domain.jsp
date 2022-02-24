@@ -219,7 +219,7 @@
                      bundles = bundles.substr(0, bundles.length-4);
                     var data = {bundles: bundles };
                     console.log(data);                    
-                    $.post('/domain/removeBundles', data, function(data) {
+                    $.post('domain/removeBundles', data, function(data) {
                                  window.location.reload();             
                     });
                     
