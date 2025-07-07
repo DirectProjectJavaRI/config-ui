@@ -734,7 +734,7 @@ text-shadow: 0px 1px 0px rgb(255, 255, 255);">TTL
 				
 <div class="box" style="margin-top:10px;margin-bottom:5px;">
         <div class="header">
-            <h3>SOA Records</h3>
+            <h3>NS Records</h3>
         </div>
 <div class="content no-padding">
 <table cellpadding="1px" cellspacing="1px" id="dnsNSList2" class="table" style="width:100%;margin-bottom:0;font-size:12px;">	
