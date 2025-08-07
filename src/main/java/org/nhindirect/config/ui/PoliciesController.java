@@ -25,8 +25,8 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.nhind.config.rest.CertPolicyService;
 import org.nhindirect.common.rest.exceptions.ServiceException;
@@ -50,7 +50,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import org.nhindirect.config.ui.form.PolicyForm;
 import org.nhindirect.policy.PolicyLexicon;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.io.IOUtils;
 import org.nhindirect.policy.PolicyLexiconParser;

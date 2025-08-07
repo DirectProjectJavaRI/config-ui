@@ -22,8 +22,8 @@ THE POSSIBILITY OF SUCH DAMAGE.
 import java.io.IOException;
 import java.util.Collection;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.nhind.config.rest.SettingService;
 import org.nhindirect.common.rest.exceptions.ServiceException;

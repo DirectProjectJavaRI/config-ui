@@ -14,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class, R2dbcAutoConfiguration.class})
-@ComponentScan(basePackages = {"org.nhindirect.config.spring.config", "org.nhindirect.config.ui"})
+@ComponentScan(basePackages = {"org.nhindirect.config"})
 public class ConfigUIApplication extends SpringBootServletInitializer implements WebMvcConfigurer
 {
     public static void main(String[] args) 
