@@ -37,7 +37,6 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.security.cert.CertificateEncodingException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -1345,7 +1344,7 @@ public class DNSController
     }
 
 	public static String getThumbPrint(X509Certificate cert)
-			throws NoSuchAlgorithmException, CertificateEncodingException {
+			throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
 		byte[] der = null;
 		byte[] digest = null;

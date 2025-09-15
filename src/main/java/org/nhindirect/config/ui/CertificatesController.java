@@ -318,7 +318,6 @@ public class CertificatesController {
 	 * Converts an incoming P12 format to an appropriate format to be store in the config store.  If a keystore protection manager
 	 * has been configured, then the private key is wrapped before sending to the config store.
 	 */
-	@SuppressWarnings("deprecation")
 	private byte[] toCertDataFormat(byte[] certOrP12Bytes, byte[] privateKeyBytes, PrivateKeyType privKeyType) throws CryptoException
 	{
 		try
@@ -338,12 +337,12 @@ public class CertificatesController {
 				// as PKCS12 file
 				if (this.keyManager == null)
 				{
-					this.log.info("Storing PKCS12 file in PKCS12 unprotected format");
+					log.info("Storing PKCS12 file in PKCS12 unprotected format");
 					return certOrP12Bytes;
 				}
 				else
 				{
-					this.log.info("Storing PKCS12 file in wrapped format");
+					log.info("Storing PKCS12 file in wrapped format");
 					// now wrap the private key
 					final byte[] wrappedKey = this.keyManager.wrapWithSecretKey((SecretKey)((KeyStoreProtectionManager)keyManager).getPrivateKeyProtectionKey(), 
 							cont.getKey());
@@ -361,7 +360,7 @@ public class CertificatesController {
 				// cert and wrapped key format
 				if (privKeyType == PrivateKeyType.PKCS8_WRAPPED)
 				{
-					this.log.info("Storing already wrapped PKCS8 file");
+					log.info("Storing already wrapped PKCS8 file");
 					return CertUtils.certAndWrappedKeyToRawByteFormat(privateKeyBytes, cont.getCert());
 				}
 				
@@ -373,7 +372,7 @@ public class CertificatesController {
 	
 				if (this.keyManager == null)
 				{
-					this.log.info("Storing PKCS8 private key in PKCS12 unprotected format");
+					log.info("Storing PKCS8 private key in PKCS12 unprotected format");
 					
 					// if there is no keystore manager, we can't wrap the keys, so we'll just send them over the wire
 					// as PKCS12 file.  need to turn this into a PKCS12 format
@@ -395,7 +394,7 @@ public class CertificatesController {
 				}		
 				else
 				{
-					this.log.info("Storing PKCS8 private key in wrapped format");
+					log.info("Storing PKCS8 private key in wrapped format");
 					// wrap the key and turn the stream in the wrapped key format
 					final byte[] wrappedKey = this.keyManager.wrapWithSecretKey((SecretKey)((KeyStoreProtectionManager)keyManager).getPrivateKeyProtectionKey(), 
 							privKey);

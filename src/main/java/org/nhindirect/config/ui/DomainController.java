@@ -1368,7 +1368,7 @@ public class DomainController {
  
                                                 final X509Certificate cert = anchor.getAsX509Certificate();                                         
                                            
-                                                final String subjectDN = cert.getSubjectDN().toString();
+                                                final String subjectDN = cert.getSubjectX500Principal().toString();
                                                 anchorMap.put(anchor, subjectDN);
     
                                         }
