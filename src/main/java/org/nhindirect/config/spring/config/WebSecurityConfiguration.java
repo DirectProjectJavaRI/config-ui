@@ -57,7 +57,7 @@ public class WebSecurityConfiguration
     	  .authorizeHttpRequests(auth -> auth
     			  .requestMatchers("/main/**", "/domain/**", "/bundles/**", 
     			     "/certificates/**", "/dns/**", "/domain/**", "/policies/**", "/settings/**").authenticated()
-    			  .requestMatchers("/resources/**", "/login", "**").permitAll()
+    			  .requestMatchers("/resources/**", "/login", "/**").permitAll()
     			  .anyRequest().authenticated()
     	   )
     	   .formLogin(form -> form
