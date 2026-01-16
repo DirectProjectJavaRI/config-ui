@@ -23,8 +23,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.nhind.config.rest.TrustBundleService;
 import org.nhindirect.common.rest.exceptions.ServiceException;
@@ -141,24 +141,29 @@ public class BundlesController {
             // Check if signing certificate is uploaded
             if (!bundleForm.getFileData().isEmpty()) 
             {
+                try {
+	                byte[] bytes = bundleForm.getFileData().getBytes();
+	
+	                final String fileType = bundleForm.getFileData().getContentType();
+	
+	                if(!fileType.matches("application/x-x509-ca-cert") && 
+	                    !fileType.matches("application/x-x509-user-cert") &&
+	                    !fileType.matches("application/pkix-cert"))
+	                {		
+	                    model.addAttribute("signingCertError", true);	
+	                    formValidated = false;
+	                } else {                        
+	                    try {
+	                        trustBundle.setSigningCertificateData(bytes);
+	                    } catch (Exception ce) {
+	
+	                    }	
+	                } 	  
+                }
+                catch (Exception e) {
+                	
+                }
                 
-                byte[] bytes = bundleForm.getFileData().getBytes();
-
-                final String fileType = bundleForm.getFileData().getContentType();
-
-                if(!fileType.matches("application/x-x509-ca-cert") && 
-                    !fileType.matches("application/x-x509-user-cert") &&
-                    !fileType.matches("application/pkix-cert"))
-                {		
-                    model.addAttribute("signingCertError", true);	
-                    formValidated = false;
-                } else {                        
-                    try {
-                        trustBundle.setSigningCertificateData(bytes);
-                    } catch (Exception ce) {
-
-                    }	
-                } 	                    
             } else {
                 if (log.isDebugEnabled()) log.debug("DO NOT store the bundle into database BECAUSE THERE IS NO FILE");
             }

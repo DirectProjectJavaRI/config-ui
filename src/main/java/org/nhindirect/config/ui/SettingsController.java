@@ -22,8 +22,8 @@ THE POSSIBILITY OF SUCH DAMAGE.
 import java.io.IOException;
 import java.util.Collection;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.nhind.config.rest.SettingService;
 import org.nhindirect.common.rest.exceptions.ServiceException;
@@ -145,9 +145,7 @@ public class SettingsController {
 			if (log.isDebugEnabled()) log.debug("the list of checkboxes checked or not is: {}", simpleForm.getRemove().toString());
 		}
 		
-		String strid = ""+simpleForm.getId();
 		if (settingsService != null && simpleForm != null && actionPath != null && (actionPath.equalsIgnoreCase("delete") || actionPath.equalsIgnoreCase("remove selected")) && simpleForm.getRemove() != null) {
-			int cnt = simpleForm.getRemove().size();
 			try{
 				Collection<String> settingstoberemovedlist = simpleForm.getRemove();
 				if (log.isDebugEnabled()) log.debug(" Trying to remove settings from database");
@@ -172,7 +170,6 @@ public class SettingsController {
 		model.addAttribute("action", action);
 		model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(requestedWith));
 		model.addAttribute("simpleForm",simpleForm);
-		strid = ""+simpleForm.getId();
 		
 		return mav;
 	}			

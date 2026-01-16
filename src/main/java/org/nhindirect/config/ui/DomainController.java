@@ -37,8 +37,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.security.auth.x500.X500Principal;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.nhind.config.rest.AddressService;
@@ -1368,7 +1368,7 @@ public class DomainController {
  
                                                 final X509Certificate cert = anchor.getAsX509Certificate();                                         
                                            
-                                                final String subjectDN = cert.getSubjectDN().toString();
+                                                final String subjectDN = cert.getSubjectX500Principal().toString();
                                                 anchorMap.put(anchor, subjectDN);
     
                                         }

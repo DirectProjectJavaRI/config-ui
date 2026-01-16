@@ -1,7 +1,7 @@
 package org.nhindirect.config.ui.form;
 
 import java.util.List;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 public class BundleForm {
 
@@ -25,7 +25,7 @@ public class BundleForm {
 		return this.domainName;
 	}
         
-	private CommonsMultipartFile fileData;	// Signing Certificate Data
+	private MultipartFile fileData;	// Signing Certificate Data
 	
         public BundleForm() {
             
@@ -76,10 +76,10 @@ public class BundleForm {
 		return thumbprint;
 	}
 	
-	public void setFileData(CommonsMultipartFile fileData) {
+	public void setFileData(MultipartFile fileData) {
 		this.fileData = fileData;
 	}
-	public CommonsMultipartFile getFileData() {
+	public MultipartFile getFileData() {
 		return fileData;
 	}
         

@@ -35,9 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.security.cert.CertificateEncodingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.nhind.config.rest.CertPolicyService;
@@ -554,7 +553,7 @@ public class MainController {
 
 	                            final X509Certificate cert = anchor.getAsX509Certificate();                                          
 	
-	                            final String subjectDN = cert.getSubjectDN().toString();
+	                            final String subjectDN = cert.getSubjectX500Principal().toString();
 	                            anchorMap.put(anchor, subjectDN);
                             }
 
@@ -1058,7 +1057,7 @@ public class MainController {
 
 
 	public static String getThumbPrint(X509Certificate cert)
-			throws NoSuchAlgorithmException, CertificateEncodingException {
+			throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
 		byte[] der = null;
 		byte[] digest = null;
