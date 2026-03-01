@@ -1147,7 +1147,7 @@ public class DomainController {
 		model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(requestedWith));
 
 		// Get all domains managed by this HISP
-                String domain = "%";
+                String domain = "*";
                 
 
                 List<Domain> results = null;

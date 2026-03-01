@@ -591,7 +591,7 @@ public class MainController {
                 model.addAttribute(form);
                 model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(requestedWith));
 
-                final String domain = (!searchDomainName.isEmpty()) ? searchDomainName : "%";
+                final String domain = (!searchDomainName.isEmpty()) ? searchDomainName : "*";
                 
                 mav.addObject("searchTerm", searchDomainName);
                 EntityStatus status = searchStatus;
@@ -678,7 +678,7 @@ public class MainController {
                 mav.addObject("searchTerm", "");
                 
                 // Get all domains managed by this HISP
-                String domain = "%";
+                String domain = "*";
                 
 
                 List<Domain> results = null;
