@@ -41,3 +41,7 @@ endpoints:
     uniqueNames: true
 
 spring.jmx.default-domain: direct-config-ui
+
+server:
+  tomcat:
+    max-part-count: 30
