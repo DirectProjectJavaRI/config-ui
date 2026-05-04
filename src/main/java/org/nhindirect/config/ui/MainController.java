@@ -602,8 +602,11 @@ public class MainController {
                 {
                 	try
                 	{
+                		org.nhindirect.config.model.EntityStatus eStatus = (status != null) ? org.nhindirect.config.model.EntityStatus.valueOf(status.toString()) :
+                			null;
+                		
 	                    final Collection<Domain> domains = domainService.searchDomains(domain, 
-	                    		org.nhindirect.config.model.EntityStatus.valueOf(status.toString()));
+	                    		eStatus);
 	                    
 	                    if (domains != null)
 	                    {
