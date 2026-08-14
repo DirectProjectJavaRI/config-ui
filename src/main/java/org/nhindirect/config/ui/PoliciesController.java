@@ -25,8 +25,8 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.Iterator;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.nhind.config.rest.CertPolicyService;
 import org.nhindirect.common.rest.exceptions.ServiceException;
@@ -46,11 +46,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import org.nhindirect.config.ui.form.PolicyForm;
 import org.nhindirect.policy.PolicyLexicon;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.io.IOUtils;
 import org.nhindirect.policy.PolicyLexiconParser;
@@ -123,12 +121,6 @@ public class PoliciesController {
             if (log.isDebugEnabled()) 
             {
                     log.debug("Beginning to add new policy");		
-            }
-
-            try {
-                URL configURL = new URL("http://localhost:8081/config-service/ConfigurationService");
-            } catch (MalformedURLException ue) {
-
             }
 
             
@@ -345,7 +337,6 @@ public class PoliciesController {
         @RequestParam("policyName") String policyName)  { 		
         
         String jsonResponse = "";
-        final org.nhindirect.policy.PolicyLexicon parseLexicon;
         
         if (log.isDebugEnabled()) 
         {
@@ -354,6 +345,7 @@ public class PoliciesController {
         
         log.error(policyName);
         
+        /*
         PolicyLexicon lex = null;
         
         // Check the file for three types of policies
@@ -372,11 +364,9 @@ public class PoliciesController {
             }
         }
         
-        // Determine lexicon type
-        parseLexicon = lex;
         
         // Convert policy content string to byte array
-        byte[] policyContentByteArray = policyContent.getBytes(); 
+        policyContent.getBytes(); 
         
         
         /*

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.LinkedHashMap;
 import org.nhindirect.policy.PolicyLexicon;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 public class PolicyForm {
 
@@ -18,7 +18,7 @@ public class PolicyForm {
         
         private Map<String,String> lexiconNames;
         
-	private CommonsMultipartFile fileData;	// Lexicon file content
+	private MultipartFile fileData;	// Lexicon file content
 	
         public PolicyForm() {
             
@@ -58,10 +58,10 @@ public class PolicyForm {
             return this.lexiconNames;
             
         }	
-	public void setFileData(CommonsMultipartFile fileData) {
+	public void setFileData(MultipartFile fileData) {
 		this.fileData = fileData;
 	}
-	public CommonsMultipartFile getFileData() {
+	public MultipartFile getFileData() {
 		return fileData;
 	}
         

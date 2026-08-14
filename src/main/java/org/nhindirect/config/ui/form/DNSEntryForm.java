@@ -35,7 +35,7 @@ import java.util.StringTokenizer;
 import org.nhindirect.common.rest.exceptions.ServiceException;
 import org.nhindirect.config.model.DNSRecord;
 import org.nhindirect.config.store.util.DNSRecordUtils;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 import org.xbill.DNS.AAAARecord;
 import org.xbill.DNS.CERTRecord;
 import org.xbill.DNS.DClass;
@@ -72,7 +72,7 @@ public class DNSEntryForm
     
     private X509Certificate certificate = null;
     private byte[] certificateData;
-    private CommonsMultipartFile fileData;
+    private MultipartFile fileData;
     
     private long   ttl      = 86400;
     private int    weight   = 0;
@@ -529,11 +529,11 @@ public class DNSEntryForm
 		return certificateData;
 	}
 
-	public void setFileData(CommonsMultipartFile fileData) {
+	public void setFileData(MultipartFile fileData) {
 		this.fileData = fileData;
 	}
 
-	public CommonsMultipartFile getFileData() {
+	public MultipartFile getFileData() {
 		return fileData;
 	}
 

@@ -35,9 +35,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javax.security.cert.CertificateEncodingException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.nhind.config.rest.CertPolicyService;
@@ -554,7 +553,7 @@ public class MainController {
 
 	                            final X509Certificate cert = anchor.getAsX509Certificate();                                          
 	
-	                            final String subjectDN = cert.getSubjectDN().toString();
+	                            final String subjectDN = cert.getSubjectX500Principal().toString();
 	                            anchorMap.put(anchor, subjectDN);
                             }
 
@@ -592,7 +591,7 @@ public class MainController {
                 model.addAttribute(form);
                 model.addAttribute("ajaxRequest", AjaxUtils.isAjaxRequest(requestedWith));
 
-                final String domain = (!searchDomainName.isEmpty()) ? searchDomainName : "%";
+                final String domain = (!searchDomainName.isEmpty()) ? searchDomainName : "*";
                 
                 mav.addObject("searchTerm", searchDomainName);
                 EntityStatus status = searchStatus;
@@ -603,8 +602,11 @@ public class MainController {
                 {
                 	try
                 	{
+                		org.nhindirect.config.model.EntityStatus eStatus = (status != null) ? org.nhindirect.config.model.EntityStatus.valueOf(status.toString()) :
+                			null;
+                		
 	                    final Collection<Domain> domains = domainService.searchDomains(domain, 
-	                    		org.nhindirect.config.model.EntityStatus.valueOf(status.toString()));
+	                    		eStatus);
 	                    
 	                    if (domains != null)
 	                    {
@@ -679,7 +681,7 @@ public class MainController {
                 mav.addObject("searchTerm", "");
                 
                 // Get all domains managed by this HISP
-                String domain = "%";
+                String domain = "*";
                 
 
                 List<Domain> results = null;
@@ -1058,7 +1060,7 @@ public class MainController {
 
 
 	public static String getThumbPrint(X509Certificate cert)
-			throws NoSuchAlgorithmException, CertificateEncodingException {
+			throws NoSuchAlgorithmException {
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
 		byte[] der = null;
 		byte[] digest = null;

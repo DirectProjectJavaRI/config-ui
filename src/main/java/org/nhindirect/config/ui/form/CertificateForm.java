@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import org.nhindirect.config.model.EntityStatus;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 public class CertificateForm {
     private String owner;
@@ -40,8 +40,8 @@ public class CertificateForm {
 		return this.keyPassphrase;
 	}
 	
-	private CommonsMultipartFile fileData;
-	private CommonsMultipartFile privKeyData;
+	private MultipartFile fileData;
+	private MultipartFile privKeyData;
 	
 	public void setOwner(String owner) {
 		this.owner = owner;
@@ -97,21 +97,21 @@ public class CertificateForm {
 	public List<String> getRemove() {
 		return remove;
 	}
-	public void setFileData(CommonsMultipartFile fileData) {
+	public void setFileData(MultipartFile fileData) {
 		this.fileData = fileData;
 	}
-	public CommonsMultipartFile getFileData() {
+	public MultipartFile getFileData() {
 		return fileData;
 	}
 
 	
 	
-	public CommonsMultipartFile getPrivKeyData()
+	public MultipartFile getPrivKeyData()
 	{
 		return privKeyData;
 	}
 
-	public void setPrivKeyData(CommonsMultipartFile privKeyData)
+	public void setPrivKeyData(MultipartFile privKeyData)
 	{
 		this.privKeyData = privKeyData;
 	}
